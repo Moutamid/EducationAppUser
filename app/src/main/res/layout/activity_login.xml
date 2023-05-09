@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15sp"
-        android:hint="Email">
+        app:helperText="use country code with a plus(+)"
+        android:hint="Phone Number">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -39,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15sp"
         android:layout_marginEnd="15sp"
+        android:visibility="gone"
         app:passwordToggleEnabled="true"
         android:hint="Password">
 

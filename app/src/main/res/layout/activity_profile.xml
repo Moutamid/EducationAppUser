@@ -36,7 +36,7 @@
         android:textSize="16sp"
         android:layout_marginStart="12sp"
         android:layout_marginEnd="12sp"
-        android:text="Email"
+        android:text="Phone Number"
         android:fontFamily="@font/poppins" />
 
     <TextView

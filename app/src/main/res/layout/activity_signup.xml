@@ -38,13 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15sp"
-        android:hint="Email">
+        app:helperText="use country code with a plus(+)"
+        android:hint="Phone Number">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
-            android:inputType="textEmailAddress" />
+            android:inputType="number|phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

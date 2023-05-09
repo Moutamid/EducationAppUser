@@ -14,6 +14,9 @@
         android:theme="@style/Theme.EducationAppUser"
         tools:targetApi="31">
         <activity
+            android:name=".ui.OtpActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.TakeQuizActivity"
             android:exported="false" />
         <activity
