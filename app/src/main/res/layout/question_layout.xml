@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/quizQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose You Preference"
+        android:textSize="20sp"
+        android:padding="12sp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/dark"
+        android:textStyle="bold" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/quizAns1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="0sp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/option1"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                app:cardCornerRadius="50sp"
+                android:layout_marginStart="12sp"
+                android:layout_marginEnd="12sp"
+                app:cardBackgroundColor="@color/blue">
+
+                <TextView
+                    android:id="@+id/option1Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="6sp"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/answer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark"
+                android:text="Option1"
+                android:padding="15sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/quizAns2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="0sp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/option2"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                app:cardCornerRadius="50sp"
+                android:layout_marginStart="12sp"
+                android:layout_marginEnd="12sp"
+                app:cardBackgroundColor="@color/blue">
+
+                <TextView
+                    android:id="@+id/option2Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="2"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="6sp"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/answer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark"
+                android:text="Option2"
+                android:padding="15sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/quizAns3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="0sp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/option3"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                app:cardCornerRadius="50sp"
+                android:layout_marginStart="12sp"
+                android:layout_marginEnd="12sp"
+                app:cardBackgroundColor="@color/blue">
+
+                <TextView
+                    android:id="@+id/option3Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="3"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="6sp"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/answer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark"
+                android:text="Option3"
+                android:padding="15sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/quizAns4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="0sp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/option4"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                app:cardCornerRadius="50sp"
+                android:layout_marginStart="12sp"
+                android:layout_marginEnd="12sp"
+                app:cardBackgroundColor="@color/blue">
+
+                <TextView
+                    android:id="@+id/option4Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="4"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="6sp"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/answer4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark"
+                android:text="Option4"
+                android:padding="15sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

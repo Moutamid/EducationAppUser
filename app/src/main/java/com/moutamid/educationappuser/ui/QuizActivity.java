@@ -3,8 +3,10 @@ package com.moutamid.educationappuser.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -36,6 +38,7 @@ public class QuizActivity extends AppCompatActivity {
     String selectedOptionByUser = "";
     ArrayList<QuestionsList> questionsLists;
     ArrayList<QuizModel> quizList;
+    int choice = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class QuizActivity extends AppCompatActivity {
         ID = getIntent().getStringExtra(Constants.ID);
         SUBJECT = getIntent().getStringExtra(Constants.Subject);
         CLASS = getIntent().getStringExtra(Constants.Class);
+        choice = getIntent().getIntExtra(Constants.Choice, 1);
 
         binding.header.back.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
@@ -63,6 +67,7 @@ public class QuizActivity extends AppCompatActivity {
                 .addOnSuccessListener(dataSnapshot -> {
                     if (dataSnapshot.exists()) {
                         questionsLists.clear();
+                        int i = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             QuizModel model = snapshot.getValue(QuizModel.class);
                             QuestionsList questionsModel = new QuestionsList(model.getQuestion(), model.getAnswer1(), model.getAnswer2(), model.getAnswer3(), model.getAnswer4(), model.getCorrectAnswer());
@@ -72,11 +77,25 @@ public class QuizActivity extends AppCompatActivity {
 
                         Collections.shuffle(quizList);
 
+                        ArrayList<QuizModel> temp = new ArrayList<>(quizList);
+
+                        if (choice == 1 && quizList.size() > 60) {
+                            quizList.clear();
+                            for (int j = 0; j < 60; j++) {
+                                quizList.add(temp.get(j));
+                            }
+                        }
+
                         QuizModel quiz = quizList.get(currentQuestionPosition);
 
-                        if (quizList.size() > 60){
-                            binding.progress.setMax(60);
-                            binding.progressIndicator.setText("1/60");
+                        if (choice == 1) {
+                            if (quizList.size() > 60) {
+                                binding.progress.setMax(60);
+                                binding.progressIndicator.setText("1/60");
+                            } else {
+                                binding.progress.setMax(quizList.size());
+                                binding.progressIndicator.setText("1/" + quizList.size());
+                            }
                         } else {
                             binding.progress.setMax(quizList.size());
                             binding.progressIndicator.setText("1/" + quizList.size());
@@ -97,6 +116,17 @@ public class QuizActivity extends AppCompatActivity {
                             binding.answer4.setText(quiz.getAnswer4());
                         }
 
+                    } else {
+                        new AlertDialog.Builder(QuizActivity.this)
+                                .setIcon(R.drawable.round_warning_24)
+                                .setTitle("Nothing Found")
+                                .setMessage("No Quiz Found For This Subject")
+                                .setPositiveButton("Ok", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                                    finish();
+                                })
+                                .show();
                     }
                 }).addOnFailureListener(e -> {
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -174,7 +204,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void changeNextQuestion() {
         currentQuestionPosition = currentQuestionPosition + 1;
-        if (currentQuestionPosition < 60 && currentQuestionPosition < quizList.size()) {
+        if (currentQuestionPosition < 60 || currentQuestionPosition < quizList.size()) {
             QuizModel quiz = quizList.get(currentQuestionPosition);
             selectedOptionByUser = "";
 
@@ -187,12 +217,16 @@ public class QuizActivity extends AppCompatActivity {
             binding.answer4.setBackgroundColor(getColor(R.color.blue));
             binding.answer4.setTextColor(Color.BLACK);
 
-
-            if (quizList.size() > 60){
-                binding.progressIndicator.setText((currentQuestionPosition + 1) + "/60");
+            if (choice == 1) {
+                if (quizList.size() > 60) {
+                    binding.progressIndicator.setText((currentQuestionPosition + 1) + "/60");
+                } else {
+                    binding.progressIndicator.setText((currentQuestionPosition + 1) + "/" + quizList.size());
+                }
             } else {
-                binding.progressIndicator.setText( (currentQuestionPosition + 1) + "/" + quizList.size());
+                binding.progressIndicator.setText((currentQuestionPosition + 1) + "/" + quizList.size());
             }
+
             binding.progress.setProgressCompat(currentQuestionPosition + 1, true);
             binding.quizName.setText(quiz.getQuizName());
             binding.quizQuestion.setText(quiz.getQuestion());
@@ -223,7 +257,7 @@ public class QuizActivity extends AppCompatActivity {
 
         int correctAnswers = 0;
 
-        for (int i = 0; i < questionsLists.size() && i < 60; i++) {
+        for (int i = 0; i < questionsLists.size() || i < 60; i++) {
             final String getUserSelectedOption = questionsLists.get(i).getUserSelectedOption();
             final String getAnswer = questionsLists.get(i).getAnswer();
 
@@ -242,7 +276,7 @@ public class QuizActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.score_dialog);
 
         TextView score = dialog.findViewById(R.id.score);
-        if (questionsLists.size()>60){
+        if (questionsLists.size() > 60) {
             score.setText("You Score : " + correctAnswers + "/60");
         } else {
             score.setText("You Score : " + correctAnswers + "/" + questionsLists.size());

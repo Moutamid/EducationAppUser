@@ -22,10 +22,13 @@ import java.net.URL;
 public class Constants {
     public static final String Class = "class";
     public static final String Subject = "Subjects";
+    public static final String Choice = "Choice";
     public static final String Quiz = "Quiz";
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String USER = "users";
+    public static final String SELECTED = "selected";
+    public static final String POSITION = "positions";
 
     public static void checkApp(Activity activity) {
         String appName = "EducationAppUser";

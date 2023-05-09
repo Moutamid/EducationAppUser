@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.TakeQuizActivity">
+
+    <include android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/check"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        app:cardCornerRadius="50sp"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:layout_marginTop="12sp"
+        android:layout_alignParentEnd="true"
+        android:clickable="false"
+        app:cardBackgroundColor="@color/blue">
+
+        <ImageView
+            android:id="@+id/allCheck"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/round_check_24"
+            android:padding="6sp"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/progressLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/progressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="1/60"
+            android:layout_marginTop="10sp" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="60"
+            android:layout_marginStart="26sp"
+            android:layout_marginEnd="26sp"
+            android:min="1"
+            app:trackCornerRadius="26sp"
+            app:indeterminateAnimationType="disjoint"
+            android:progress="1"
+            app:indicatorColor="@color/yellow"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quizRC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/progressLay"
+        tools:listitem="@layout/question_layout"
+        android:layout_marginTop="12sp"/>
+
+</RelativeLayout>

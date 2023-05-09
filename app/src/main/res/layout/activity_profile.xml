@@ -9,6 +9,55 @@
 
     <include android:id="@+id/header" layout="@layout/header" />
 
+    <TextView
+        android:id="@+id/greeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="12sp"
+        android:text="Helo"
+        android:fontFamily="@font/poppins" />
 
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12sp"
+        android:textSize="34sp"
+        android:gravity="center"
+        android:text="Helo"
+        android:fontFamily="@font/poppins" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12sp"
+        android:textSize="16sp"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:text="Email"
+        android:fontFamily="@font/poppins" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12sp"
+        android:textSize="18sp"
+        android:text="Email"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:background="@drawable/round_bg"
+        android:fontFamily="@font/poppins" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12sp"
+        android:text="Logout"
+        android:textSize="18sp"
+        android:backgroundTint="@color/yellow" />
 
 </LinearLayout>
