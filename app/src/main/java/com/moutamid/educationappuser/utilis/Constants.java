@@ -22,6 +22,7 @@ import java.net.URL;
 public class Constants {
     public static final String Class = "class";
     public static final String Subject = "Subjects";
+    public static final String SCORE = "score";
     public static final String Choice = "Choice";
     public static final String Quiz = "Quiz";
     public static final String ID = "id";

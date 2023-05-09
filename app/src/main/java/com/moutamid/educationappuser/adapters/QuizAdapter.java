@@ -10,11 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fxn.stash.Stash;
 import com.google.android.material.card.MaterialCardView;
 import com.moutamid.educationappuser.R;
 import com.moutamid.educationappuser.listners.QuizListner;
 import com.moutamid.educationappuser.models.QuizModel;
 import com.moutamid.educationappuser.models.SelectedAnswersModel;
+import com.moutamid.educationappuser.utilis.Constants;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
     ArrayList<QuizModel> quizList;
     ArrayList<SelectedAnswersModel> selectedAnswers;
     QuizListner quizListner;
-    String[] selected_answers = new String[]{};
-    int[] positions;
+    int p = 0;
 
     private static final int QUIZ_MCQs = 0;
     private static final int QUIZ_NORMAL = 1;
@@ -34,6 +35,8 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
         this.quizList = quizList;
         this.quizListner = quizListner;
         this.selectedAnswers = new ArrayList<>();
+        SelectedAnswersModel model = new SelectedAnswersModel("", 0);
+        selectedAnswers.add(model);
     }
 
     @NonNull
@@ -74,13 +77,29 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
     }
 
     private void clickListeners(QuizVH holder, int pos) {
+
         holder.quizAns1.setOnClickListener(v -> {
+
             if (quizList.get(pos).isType()) {
-                if (!holder.multiCheck){
+                if (!holder.multiCheck) {
                     holder.multiCheck = true;
                     holder.option1Image.setImageResource(R.drawable.round_check_white);
                     holder.option1.setCardBackgroundColor(context.getColor(R.color.green));
+                    String ss = holder.answer1.getText().toString();
+                    holder.holdAnswers = holder.holdAnswers + ss + ",";
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer());
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setPosition(model.getPosition());
+                    } else {
+                        selectedAnswers.add(model);
+                    }
                 } else {
+                    String ss = holder.answer1.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer().replace(ss, ""));
+                    }
                     holder.multiCheck = false;
                     holder.option1Image.setImageResource(R.drawable.round_check_24);
                     holder.option1.setCardBackgroundColor(context.getColor(R.color.blue));
@@ -89,6 +108,19 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option1Text.setTextColor(context.getColor(R.color.white));
                 holder.option1.setCardBackgroundColor(context.getColor(R.color.green));
 
+                if (holder.holdAnswers.isEmpty()){
+                    holder.holdAnswers = holder.answer1.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    selectedAnswers.add(model);
+                } else {
+                    String ss = holder.answer1.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(ss);
+                        holder.holdAnswers = ss;
+                    }
+                }
+
                 holder.option2Text.setTextColor(context.getColor(R.color.dark));
                 holder.option2.setCardBackgroundColor(context.getColor(R.color.blue));
                 holder.option3Text.setTextColor(context.getColor(R.color.dark));
@@ -96,6 +128,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option4Text.setTextColor(context.getColor(R.color.dark));
                 holder.option4.setCardBackgroundColor(context.getColor(R.color.blue));
             }
+            Stash.put(Constants.SELECTED, selectedAnswers);
             quizListner.click(holder.check, holder);
             holder.check = true;
         });
@@ -106,7 +139,21 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                     holder.multiCheck = true;
                     holder.option2Image.setImageResource(R.drawable.round_check_white);
                     holder.option2.setCardBackgroundColor(context.getColor(R.color.green));
+                    String ss = holder.answer2.getText().toString();
+                    holder.holdAnswers = holder.holdAnswers + ss + ",";
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer());
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setPosition(model.getPosition());
+                    } else {
+                        selectedAnswers.add(model);
+                    }
                 } else {
+                    String ss = holder.answer2.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer().replace(ss, ""));
+                    }
                     holder.multiCheck = false;
                     holder.option2Image.setImageResource(R.drawable.round_check_24);
                     holder.option2.setCardBackgroundColor(context.getColor(R.color.blue));
@@ -115,6 +162,19 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option2Text.setTextColor(context.getColor(R.color.white));
                 holder.option2.setCardBackgroundColor(context.getColor(R.color.green));
 
+                if (holder.holdAnswers.isEmpty()){
+                    holder.holdAnswers = holder.answer2.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    selectedAnswers.add(model);
+                } else {
+                    String ss = holder.answer2.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(ss);
+                        holder.holdAnswers = ss;
+                    }
+                }
+
                 holder.option1Text.setTextColor(context.getColor(R.color.dark));
                 holder.option1.setCardBackgroundColor(context.getColor(R.color.blue));
                 holder.option3Text.setTextColor(context.getColor(R.color.dark));
@@ -122,6 +182,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option4Text.setTextColor(context.getColor(R.color.dark));
                 holder.option4.setCardBackgroundColor(context.getColor(R.color.blue));
             }
+            Stash.put(Constants.SELECTED, selectedAnswers);
             quizListner.click(holder.check, holder);
             holder.check = true;
         });
@@ -132,7 +193,21 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                     holder.multiCheck = true;
                     holder.option3Image.setImageResource(R.drawable.round_check_white);
                     holder.option3.setCardBackgroundColor(context.getColor(R.color.green));
+                    String ss = holder.answer3.getText().toString();
+                    holder.holdAnswers = holder.holdAnswers + ss + ",";
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer());
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setPosition(model.getPosition());
+                    } else {
+                        selectedAnswers.add(model);
+                    }
                 } else {
+                    String ss = holder.answer3.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer().replace(ss, ""));
+                    }
                     holder.multiCheck = false;
                     holder.option3Image.setImageResource(R.drawable.round_check_24);
                     holder.option3.setCardBackgroundColor(context.getColor(R.color.blue));
@@ -141,6 +216,19 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option3Text.setTextColor(context.getColor(R.color.white));
                 holder.option3.setCardBackgroundColor(context.getColor(R.color.green));
 
+                if (holder.holdAnswers.isEmpty()){
+                    holder.holdAnswers = holder.answer3.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    selectedAnswers.add(model);
+                } else {
+                    String ss = holder.answer3.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(ss);
+                        holder.holdAnswers = ss;
+                    }
+                }
+
                 holder.option1Text.setTextColor(context.getColor(R.color.dark));
                 holder.option1.setCardBackgroundColor(context.getColor(R.color.blue));
                 holder.option2Text.setTextColor(context.getColor(R.color.dark));
@@ -148,6 +236,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option4Text.setTextColor(context.getColor(R.color.dark));
                 holder.option4.setCardBackgroundColor(context.getColor(R.color.blue));
             }
+            Stash.put(Constants.SELECTED, selectedAnswers);
             quizListner.click(holder.check, holder);
             holder.check = true;
         });
@@ -158,7 +247,21 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                     holder.multiCheck = true;
                     holder.option4Image.setImageResource(R.drawable.round_check_white);
                     holder.option4.setCardBackgroundColor(context.getColor(R.color.green));
+                    String ss = holder.answer4.getText().toString();
+                    holder.holdAnswers = holder.holdAnswers + ss + ",";
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer());
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setPosition(model.getPosition());
+                    } else {
+                        selectedAnswers.add(model);
+                    }
                 } else {
+                    String ss = holder.answer4.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(model.getAnswer().replace(ss, ""));
+                    }
                     holder.multiCheck = false;
                     holder.option4Image.setImageResource(R.drawable.round_check_24);
                     holder.option4.setCardBackgroundColor(context.getColor(R.color.blue));
@@ -168,6 +271,19 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option4Text.setTextColor(context.getColor(R.color.white));
                 holder.option4.setCardBackgroundColor(context.getColor(R.color.green));
 
+                if (holder.holdAnswers.isEmpty()){
+                    holder.holdAnswers = holder.answer4.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    selectedAnswers.add(model);
+                } else {
+                    String ss = holder.answer4.getText().toString();
+                    SelectedAnswersModel model = new SelectedAnswersModel(holder.holdAnswers, pos);
+                    if (selectedAnswers.contains(model)) {
+                        selectedAnswers.get(selectedAnswers.indexOf(model)).setAnswer(ss);
+                        holder.holdAnswers = ss;
+                    }
+                }
+
                 holder.option1Text.setTextColor(context.getColor(R.color.dark));
                 holder.option1.setCardBackgroundColor(context.getColor(R.color.blue));
                 holder.option2Text.setTextColor(context.getColor(R.color.dark));
@@ -175,6 +291,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
                 holder.option3Text.setTextColor(context.getColor(R.color.dark));
                 holder.option3.setCardBackgroundColor(context.getColor(R.color.blue));
             }
+            Stash.put(Constants.SELECTED, selectedAnswers);
             quizListner.click(holder.check, holder);
             holder.check = true;
         });
@@ -197,6 +314,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
         ImageView option1Image, option2Image, option3Image, option4Image;
         MaterialCardView quizAns1, quizAns2, quizAns3, quizAns4;
         public boolean check, multiCheck;
+        String holdAnswers;
         public QuizVH(@NonNull View itemView) {
             super(itemView);
 
@@ -227,6 +345,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizVH> {
             quizAns4 = itemView.findViewById(R.id.quizAns4);
 
             check = multiCheck = false;
+            holdAnswers = "";
         }
     }
 

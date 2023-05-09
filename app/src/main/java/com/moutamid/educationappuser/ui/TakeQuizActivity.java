@@ -4,10 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.moutamid.educationappuser.MainActivity;
 import com.moutamid.educationappuser.R;
@@ -16,6 +25,8 @@ import com.moutamid.educationappuser.databinding.ActivityTakeQuizBinding;
 import com.moutamid.educationappuser.listners.QuizListner;
 import com.moutamid.educationappuser.models.QuestionsList;
 import com.moutamid.educationappuser.models.QuizModel;
+import com.moutamid.educationappuser.models.SaveScoreModel;
+import com.moutamid.educationappuser.models.SelectedAnswersModel;
 import com.moutamid.educationappuser.utilis.Constants;
 
 import java.util.ArrayList;
@@ -101,9 +112,59 @@ public class TakeQuizActivity extends AppCompatActivity {
                 });
 
         binding.check.setOnClickListener(v -> {
-
+            ArrayList<SelectedAnswersModel> selectedAnswers = Stash.getArrayList(Constants.SELECTED, SelectedAnswersModel.class);
+            int correctAnswers = 0;
+            for (int i = 0; i < quizList.size(); i++) {
+                for (int j = 0; j < selectedAnswers.size(); j++) {
+                    if (i == selectedAnswers.get(j).getPosition()) {
+                        if (quizList.get(i).getCorrectAnswer().trim().equals(selectedAnswers.get(j).getAnswer())){
+                            correctAnswers++;
+                        }
+                    }
+                }
+            }
+            showVic(correctAnswers, quizList.size());
         });
 
+    }
+
+    public void showVic(int correctAnswers, int size) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.score_dialog);
+
+        TextView score = dialog.findViewById(R.id.score);
+        if (questionsLists.size() > 60) {
+            score.setText("You Score : " + correctAnswers + "/60");
+        } else {
+            score.setText("You Score : " + correctAnswers + "/" + questionsLists.size());
+        }
+
+        Button close = dialog.findViewById(R.id.close);
+        close.setOnClickListener(v -> dialog.dismiss());
+
+        Button save = dialog.findViewById(R.id.save);
+        save.setOnClickListener(v -> {
+            saveScore(correctAnswers, size);
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.Dialog;
+        dialog.getWindow().setGravity(Gravity.CENTER);
+    }
+
+    private void saveScore(int correctAnswers, int size) {
+        SaveScoreModel model = new SaveScoreModel(CLASS, SUBJECT, correctAnswers, size);
+        Constants.databaseReference().child(Constants.SCORE).child(Constants.auth().getCurrentUser().getUid())
+                .push()
+                .setValue(model)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(this, "Score Saved", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(this, "Something went wrong when saving the score", Toast.LENGTH_SHORT).show();
+                });
     }
 
     QuizListner listner = new QuizListner() {
@@ -113,7 +174,7 @@ public class TakeQuizActivity extends AppCompatActivity {
                 counter++;
                 binding.progressIndicator.setText(counter+"/"+quizList.size());
                 binding.progress.setProgress(counter, true);
-                if (counter >= quizList.size()){
+                if (counter >= quizList.size()) {
                     binding.check.setClickable(true);
                     binding.check.setCardBackgroundColor(getColor(R.color.green));
                     binding.allCheck.setImageResource(R.drawable.round_check_white);

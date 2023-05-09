@@ -4,9 +4,6 @@ public class SelectedAnswersModel {
     String answer;
     int position;
 
-    public SelectedAnswersModel() {
-    }
-
     public SelectedAnswersModel(String answer, int position) {
         this.answer = answer;
         this.position = position;
