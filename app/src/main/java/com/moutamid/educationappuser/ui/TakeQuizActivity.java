@@ -146,6 +146,7 @@ public class TakeQuizActivity extends AppCompatActivity {
         Button save = dialog.findViewById(R.id.save);
         save.setOnClickListener(v -> {
             saveScore(correctAnswers, size);
+            dialog.dismiss();
         });
 
         dialog.show();
