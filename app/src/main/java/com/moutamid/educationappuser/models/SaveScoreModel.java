@@ -3,15 +3,25 @@ package com.moutamid.educationappuser.models;
 public class SaveScoreModel {
     String className, subjectName;
     int score, size;
+    long timestamp;
 
     public SaveScoreModel() {
     }
 
-    public SaveScoreModel(String className, String subjectName, int score, int size) {
+    public SaveScoreModel(String className, String subjectName, int score, int size, long timestamp) {
         this.className = className;
         this.subjectName = subjectName;
         this.score = score;
         this.size = size;
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getSize() {

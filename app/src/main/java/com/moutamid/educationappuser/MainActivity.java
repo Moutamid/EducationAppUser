@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.moutamid.educationappuser.databinding.ActivityMainBinding;
 import com.moutamid.educationappuser.ui.MyClassActivity;
 import com.moutamid.educationappuser.ui.ProfileActivity;
+import com.moutamid.educationappuser.ui.ScoreActivity;
 
 import java.util.Calendar;
 
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding.profile.setOnClickListener(v -> {
             startActivity(new Intent(this, ProfileActivity.class));
+            finish();
+        });
+
+        binding.score.setOnClickListener(v -> {
+            startActivity(new Intent(this, ScoreActivity.class));
             finish();
         });
 

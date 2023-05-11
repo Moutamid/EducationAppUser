@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             progressDialog.dismiss();
+                            dialog6.dismiss();
                             // Update UI
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
@@ -105,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // The verification code entered was invalid
                                 Toast.makeText(LoginActivity.this, "The verification code entered was invalid", Toast.LENGTH_SHORT).show();
                             }
+                            dialog6.dismiss();
                             progressDialog.dismiss();
                         }
                     }

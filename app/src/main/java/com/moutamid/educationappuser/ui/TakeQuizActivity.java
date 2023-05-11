@@ -31,6 +31,7 @@ import com.moutamid.educationappuser.utilis.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class TakeQuizActivity extends AppCompatActivity {
     ActivityTakeQuizBinding binding;
@@ -157,7 +158,7 @@ public class TakeQuizActivity extends AppCompatActivity {
     }
 
     private void saveScore(int correctAnswers, int size) {
-        SaveScoreModel model = new SaveScoreModel(CLASS, SUBJECT, correctAnswers, size);
+        SaveScoreModel model = new SaveScoreModel(CLASS, SUBJECT, correctAnswers, size, new Date().getTime());
         Constants.databaseReference().child(Constants.SCORE).child(Constants.auth().getCurrentUser().getUid())
                 .push()
                 .setValue(model)
