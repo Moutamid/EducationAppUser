@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         PhoneAuthOptions.newBuilder(Constants.auth())
                                 .setPhoneNumber(binding.email.getEditText().getText().toString().trim())       // Phone number to verify
                                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-//                                .setActivity(this)                 // (optional) Activity for callback binding
+                                .setActivity(this)                 // (optional) Activity for callback binding
 //                                // If no activity is passed, reCAPTCHA verification can not be used.
                                 .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                                 .build();

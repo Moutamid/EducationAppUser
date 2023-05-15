@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,8 +69,9 @@ public class SignupActivity extends AppCompatActivity {
             if (valid()) {
                 progressDialog.show();
                 username = binding.name.getEditText().getText().toString();
-                email = binding.email.getEditText().getText().toString();
+                email = binding.email.getEditText().getText().toString().trim();
                 password = binding.password.getEditText().getText().toString();
+                Stash.put("num", binding.email.getEditText().getText().toString().trim());
                 PhoneAuthOptions options =
                         PhoneAuthOptions.newBuilder(Constants.auth())
                                 .setPhoneNumber(binding.email.getEditText().getText().toString().trim())       // Phone number to verify
