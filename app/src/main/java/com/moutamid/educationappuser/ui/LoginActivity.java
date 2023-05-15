@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -63,12 +64,13 @@ public class LoginActivity extends AppCompatActivity {
         binding.login.setOnClickListener(v -> {
             if (valid()) {
                 progressDialog.show();
+                Stash.put("num", binding.email.getEditText().getText().toString().trim());
                 PhoneAuthOptions options =
                         PhoneAuthOptions.newBuilder(Constants.auth())
                                 .setPhoneNumber(binding.email.getEditText().getText().toString().trim())       // Phone number to verify
                                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                                .setActivity(this)                 // (optional) Activity for callback binding
-                                // If no activity is passed, reCAPTCHA verification can not be used.
+//                                .setActivity(this)                 // (optional) Activity for callback binding
+//                                // If no activity is passed, reCAPTCHA verification can not be used.
                                 .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                                 .build();
                 Constants.auth().useAppLanguage();
