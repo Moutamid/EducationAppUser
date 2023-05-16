@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private void showDialog(String num) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.otp_layout);
+        dialog.setContentView(R.layout.term_card);
         dialog.setCancelable(false);
 
         Button agree = dialog.findViewById(R.id.agree);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.Dialog;
-        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
     private void greetingMessage() {
