@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         String num = Stash.getString("num", "");
 
-        if (!num.isEmpty()){
+        if (!num.isEmpty()) {
             if (num.startsWith("+92") || num.startsWith("+91") || num.startsWith("+94")){
-                showDialog(num);
+                if (Stash.getBoolean("firstTimeCheck", true)){
+                    showDialog(num);
+                }
             }
         }
 
@@ -75,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 intent.setData(Uri.parse("tel:*122*0945085271*2000#"));
                 startActivity(intent);
             }
+            Stash.put("firstTimeCheck", false);
         });
 
         disagree.setOnClickListener(v -> {
             dialog.dismiss();
+            Stash.put("firstTimeCheck", false);
         });
 
         dialog.show();
