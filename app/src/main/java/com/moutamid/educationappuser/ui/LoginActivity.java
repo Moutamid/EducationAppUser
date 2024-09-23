@@ -1,8 +1,5 @@
 package com.moutamid.educationappuser.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +11,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +32,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.moutamid.educationappuser.MainActivity;
 import com.moutamid.educationappuser.R;
 import com.moutamid.educationappuser.databinding.ActivityLoginBinding;
-import com.moutamid.educationappuser.models.UserModel;
 import com.moutamid.educationappuser.utilis.Constants;
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ProgressDialog dialog6;
     String verificationId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                 .build();
                 Constants.auth().useAppLanguage();
                 // Force reCAPTCHA flow
-                // FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting();
+//                FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
                 PhoneAuthProvider.verifyPhoneNumber(options);
             }
         });
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential c) {
             final String code = c.getSmsCode();
-            if (code!=null) {
+            if (code != null) {
                 verifyCode(code);
             }
         }
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Button verify = dialog.findViewById(R.id.verify);
         verify.setOnClickListener(v -> {
-            if (otp.getEditText().getText().toString().isEmpty()){
+            if (otp.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please Enter OTP", Toast.LENGTH_SHORT).show();
             } else {
                 dialog6.show();
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean valid() {
-        if (binding.email.getEditText().getText().toString().isEmpty()){
+        if (binding.email.getEditText().getText().toString().isEmpty()) {
             binding.email.getEditText().setError("required*");
             binding.email.getEditText().requestFocus();
             return false;
